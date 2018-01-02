@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 declare var Chart;
 
@@ -7,12 +7,13 @@ declare var Chart;
   template: '',
   styles: [':host { display: block; }']
 })
-export class ChartComponent implements OnInit, OnChanges  {
+export class ChartComponent implements OnInit, OnChanges {
   chart: any;
 
   @Input() type: string;
   @Input() data: any;
   @Input() options: any;
+  @Output() chartClick: EventEmitter<any> = new EventEmitter<any>();
 
   private canvas;
 
@@ -47,5 +48,11 @@ export class ChartComponent implements OnInit, OnChanges  {
       data: this.data,
       options: this.options
     });
+    this.canvas.onclick = (event) => {
+      const chartElement = this.chart.getElementAtEvent(event)[0];
+      if (chartElement) {
+        this.chartClick.emit(chartElement);
+      }
+    };
   }
 }
