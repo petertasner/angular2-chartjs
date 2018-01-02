@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, ElementRef, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-
-declare var Chart;
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'chart',
